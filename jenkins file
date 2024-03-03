@@ -28,6 +28,9 @@ pipeline{
                 sh 'mvn package'
             }
         }
-      
+        stage('run dockerfile'){
+        steps{
+              sh 'docker build -t myimag .'
+              sh 'docker run -dt -p 8082:80 -name co1 '
     }
 }
