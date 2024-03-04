@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+    stages{
+        stage('checkout the code from github'){
+            steps{
+                 git url: ''https://github.com/neelamaha/Banking-java-project/
+                 echo 'github url checkout'
+            }
+        }
+        stage('codecompile with neelamaha'){
+            steps{
+                echo 'starting compiling'
+                sh 'mvn compile'
+            }
+        }
+        stage('codetesting with neelamaha'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+        stage('qa with neelamaha'){
+            steps{
+                sh 'mvn checkstyle:checkstyle'
+            }
+        }
+        stage('package with neelamaha'){
+            steps{
+                sh 'mvn package'
+            }
+        }
+        stage('run dockerfile'){
+        steps{
+              sh 'docker build -t myimag .'
+           }  
+         }
+        stage(' port expose '){
+            steps{
+                 sh 'docker run -dt -p 8091:80 --name c000 myimg'
+             }
+        }
+ }
+              }
+         }
+   }
